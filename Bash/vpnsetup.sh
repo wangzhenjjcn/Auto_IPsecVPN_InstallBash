@@ -5,9 +5,9 @@
 # - IPsec pre-shared key, VPN username and password
 # - All values MUST be placed inside 'single quotes'
 # - DO NOT use these special characters within values: \ " '
-YOUR_IPSEC_PSK='SamplePSKkey'
-YOUR_USERNAME='username'
-YOUR_PASSWORD='password'
+YOUR_IPSEC_PSK='myazure.org'
+YOUR_USERNAME='myazure'
+YOUR_PASSWORD='myazure'
 # =====================================================
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 SYS_DT="$(date +%F-%T)"
@@ -173,7 +173,7 @@ conn shared
   dpdaction=clear
   ike=3des-sha1,3des-sha2,aes-sha1,aes-sha1;modp1024,aes-sha2,aes-sha2;modp1024,aes256-sha2_512
   phase2alg=3des-sha1,3des-sha2,aes-sha1,aes-sha2,aes256-sha2_512
-  sha2-truncbug=yes
+  sha2-truncbug=no
 
 conn l2tp-psk
   auto=add
