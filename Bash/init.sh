@@ -6,7 +6,7 @@ mkdir /mnt/myazure
 mkdir /mnt/myazure/vpn
 cd /mnt/myazure/vpn
 
-wget https://raw.githubusercontent.com/wangzhenjjcn/Auto_IPsecVPN_InstallBash/master/Bash/vpnsetup.sh  -O vpnsetup.sh && sudo sh vpnsetup.sh
+wget https://raw.githubusercontent.com/wangzhenjjcn/Auto_IPsecVPN_InstallBash/master/Bash/init.sh  -O init.sh && sudo sh init.sh
 apt-get install -y nginx
 apt-get install -y htop
 add-apt-repository  -y ppa:webupd8team/java
