@@ -1,19 +1,4 @@
 @echo off
-MODE con: COLS=160 LINES=50
-set filepath=%~dp0
-cd %filepath%
->nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"  
-if '%errorlevel%' NEQ '0' (  
-echo request Admin Access...  
-goto UACPrompt  
-) else ( goto gotAdmin )   
-:UACPrompt   
-echo Set UAC = CreateObject^("Shell.Application"^) > "%temp%\getadmin.vbs"  
-echo UAC.ShellExecute "%~s0", "", "", "runas", 1 >> "%temp%\getadmin.vbs"  
-"%temp%\getadmin.vbs"  
-exit /B  
-:gotAdmin
-cls
 route delete 1.0.1.0
 route delete 1.0.2.0
 route delete 1.0.8.0
@@ -3283,8 +3268,6 @@ route delete 103.85.20.0
 route delete 103.85.24.0
 route delete 103.85.44.0
 route delete 103.85.48.0
-route delete 103.85.52.0
-route delete 103.85.56.0
 route delete 103.85.84.0
 route delete 103.85.136.0
 route delete 103.85.144.0
@@ -3748,6 +3731,23 @@ route delete 103.115.68.0
 route delete 103.115.92.0
 route delete 103.115.120.0
 route delete 103.115.148.0
+route delete 103.115.204.0
+route delete 103.115.248.0
+route delete 103.116.20.0
+route delete 103.116.40.0
+route delete 103.116.64.0
+route delete 103.116.72.0
+route delete 103.116.76.0
+route delete 103.116.92.0
+route delete 103.116.120.0
+route delete 103.116.128.0
+route delete 103.116.132.0
+route delete 103.116.148.0
+route delete 103.116.184.0
+route delete 103.116.206.0
+route delete 103.116.220.0
+route delete 103.116.224.0
+route delete 103.116.228.0
 route delete 103.192.0.0
 route delete 103.192.4.0
 route delete 103.192.8.0
@@ -4130,7 +4130,6 @@ route delete 103.213.180.0
 route delete 103.213.184.0
 route delete 103.213.188.0
 route delete 103.213.248.0
-route delete 103.213.252.0
 route delete 103.214.32.0
 route delete 103.214.48.0
 route delete 103.214.84.0
@@ -5683,7 +5682,6 @@ route delete 144.0.0.0
 route delete 144.7.0.0
 route delete 144.12.0.0
 route delete 144.48.8.0
-route delete 144.48.12.0
 route delete 144.48.56.0
 route delete 144.48.64.0
 route delete 144.48.88.0
@@ -8183,4 +8181,3 @@ route delete 223.254.0.0
 route delete 223.255.0.0
 route delete 223.255.236.0
 route delete 223.255.252.0
-pause;
