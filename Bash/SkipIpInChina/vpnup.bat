@@ -17,8 +17,8 @@ echo UAC.ShellExecute "%~s0", "", "", "runas", 1 >> "%temp%\getadmin.vbs"
 exit /B  
 :gotAdmin
 cls
-set  gw=192.168.8.1
- 
+
+set /p gw=请输入网关:  
 	
 	 
 ipconfig /flushdns
