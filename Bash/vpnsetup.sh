@@ -24,7 +24,7 @@
 # - All values MUST be placed inside 'single quotes'
 # - DO NOT use these special characters within values: \ " '
 
-YOUR_IPSEC_PSK='myauzre.org'
+YOUR_IPSEC_PSK='myazure.org'
 YOUR_USERNAME='username'
 YOUR_PASSWORD='password'
 
