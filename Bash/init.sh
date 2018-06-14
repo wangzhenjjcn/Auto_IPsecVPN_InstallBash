@@ -16,10 +16,17 @@ echo "mysql-server mysql-server/root_password_again password DontUseRoot" | debc
 apt-get -y install mysql-server-5.7
 usermod -d /var/lib/mysql/ mysql
 sed -i 's/127\.0\.0\.1/0\.0\.0\.0/g' /etc/mysql/mysql.conf.d/mysqld.cnf
-echo "CREATE DATABASE myazure\_vpn;" >>  /tmp/init.sql
 echo "USE mysql; " >>  /tmp/init.sql
-echo "UPDATE \`user\` SET \`Host\`="%" WHERE \`User\`=\"root\" AND \`Host\`="localhost"; " >>  /tmp/init.sql
-echo "DELETE FROM \`user\` WHERE \`Host\` != \"%\" AND \`User\`=\"root\"; FLUSH PRIVILEGES;" >>  /tmp/init.sql
+echo "UPDATE user SET Host="%" WHERE User=\"root\" AND Host=\"localhost\"; " >>  /tmp/init.sql
+echo "DELETE FROM user WHERE Host != \"%\" AND User=\"root\"; FLUSH PRIVILEGES;" >>  /tmp/init.sql
+echo "CREATE DATABASE myazure_vpn;" >>  /tmp/init.sql
+echo "USE myazure_vpn; " >>  /tmp/init.sql
+echo "CREATE TABLE \`data\` (" >>  /tmp/init.sql
+echo "  \`mKey\` varchar(500) NOT NULL," >>  /tmp/init.sql
+echo "  \`mValue\` varchar(5000) NOT NULL," >>  /tmp/init.sql
+echo "  PRIMARY KEY (\`mKey\`)" >>  /tmp/init.sql
+echo ") ENGINE=InnoDB DEFAULT CHARSET=utf8;" >>  /tmp/init.sql
+echo "INSERT INTO \`data\` (\`mKey\`, \`mValue\`) VALUES ('ILOVECHINA', '21h8930n5y3842d34u89SE7RV8989Y89HY789Y89hny780YN)789yN780Y780yn&*o(byn&*ybn&*)y&*)yne&*rerwer9IERYT8J9F53N')" >>  /tmp/init.sql
 echo "CREATE USER 'vpn'@'localhost' IDENTIFIED BY 'DontUseRoot';" >>  /tmp/init.sql
 echo "GRANT SELECT, INSERT, UPDATE, REFERENCES, DELETE, CREATE, DROP, ALTER, INDEX, TRIGGER, CREATE VIEW, SHOW VIEW, EXECUTE, ALTER ROUTINE, CREATE ROUTINE, CREATE TEMPORARY TABLES, LOCK TABLES, EVENT ON \`myazure\_vpn\`.* TO 'vpn'@'localhost';" >>  /tmp/init.sql
 echo "GRANT GRANT OPTION ON \`myazure\_vpn\`.* TO 'vpn'@'localhost';" >>  /tmp/init.sql
@@ -93,6 +100,49 @@ echo "localip 10.10.10.1" >>   /etc/pptpd.conf
 echo "remoteip 10.10.10.2-245" >>   /etc/pptpd.conf
 echo "ms-dns 8.8.8.8" >>    /etc/ppp/pptpd-options
 echo "ms-dns 8.8.4.4" >>    /etc/ppp/pptpd-options
-
 service pptpd restart
-reboot
+echo "" >   /etc/nginx/sites-enabled/default
+echo "" >  /etc/nginx/sites-enabled/vpn.conf
+echo "server" >>  /etc/nginx/sites-enabled/vpn.conf
+echo "{" >>  /etc/nginx/sites-enabled/vpn.conf
+echo "listen             80;" >>  /etc/nginx/sites-enabled/vpn.conf
+echo "            server_name  vpn.*  ;" >>  /etc/nginx/sites-enabled/vpn.conf
+echo "            index index.php index.html index.htm index.jsp;" >>  /etc/nginx/sites-enabled/vpn.conf
+echo "            root   html;" >>  /etc/nginx/sites-enabled/vpn.conf
+echo "                location ~ ^/NginxStatus/ {" >>  /etc/nginx/sites-enabled/vpn.conf
+echo "                        stub_status on;" >>  /etc/nginx/sites-enabled/vpn.conf
+echo "                        access_log on;" >>  /etc/nginx/sites-enabled/vpn.conf
+echo "                 }" >>  /etc/nginx/sites-enabled/vpn.conf
+echo "         location / {" >>  /etc/nginx/sites-enabled/vpn.conf
+echo "              root    html;" >>  /etc/nginx/sites-enabled/vpn.conf
+echo "             proxy_redirect off ;" >>  /etc/nginx/sites-enabled/vpn.conf
+echo "             proxy_set_header Host \$host;" >>  /etc/nginx/sites-enabled/vpn.conf
+echo "             proxy_set_header X-Real-IP \$remote_addr;" >>  /etc/nginx/sites-enabled/vpn.conf
+echo "             proxy_set_header REMOTE-HOST \$remote_addr;" >>  /etc/nginx/sites-enabled/vpn.conf
+echo "             proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;" >>  /etc/nginx/sites-enabled/vpn.conf
+echo "             client_max_body_size 250m;" >>  /etc/nginx/sites-enabled/vpn.conf
+echo "             client_body_buffer_size 1m;" >>  /etc/nginx/sites-enabled/vpn.conf
+echo "             proxy_connect_timeout 3000;" >>  /etc/nginx/sites-enabled/vpn.conf
+echo "             proxy_send_timeout 1200;" >>  /etc/nginx/sites-enabled/vpn.conf
+echo "             proxy_read_timeout 1200;" >>  /etc/nginx/sites-enabled/vpn.conf
+echo "             proxy_buffer_size 256k;" >>  /etc/nginx/sites-enabled/vpn.conf
+echo "             proxy_buffers 4 256k;" >>  /etc/nginx/sites-enabled/vpn.conf
+echo "             proxy_busy_buffers_size 256k;" >>  /etc/nginx/sites-enabled/vpn.conf
+echo "             proxy_temp_file_write_size 256k;" >>  /etc/nginx/sites-enabled/vpn.conf
+echo "             proxy_next_upstream error timeout invalid_header http_500 http_503 http_404;" >>  /etc/nginx/sites-enabled/vpn.conf
+echo "             proxy_max_temp_file_size 256m;" >>  /etc/nginx/sites-enabled/vpn.conf
+echo "             proxy_pass    http://127.0.0.1:8888/;" >>  /etc/nginx/sites-enabled/vpn.conf
+echo "            }" >>  /etc/nginx/sites-enabled/vpn.conf
+echo "}" >>  /etc/nginx/sites-enabled/vpn.conf
+service nginx restart
+service pptpd restart
+service ipsec restart
+cd /mnt/myazure/vpn
+
+
+
+wget https://github.com/wangzhenjjcn/IPSEC_USER_MANAGEMENT/releases/download/v2.0.0.2/vpn-V2.0.0.2.jar  -O vpn-v2.0.0.2.jar
+nohup java  -jar /mnt/myazure/vpn/vpn-v2.0.0.2.jar > /var/log/vpn/wvpn.log &
+
+
+
