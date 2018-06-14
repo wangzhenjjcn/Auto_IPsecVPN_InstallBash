@@ -141,7 +141,7 @@ cd /mnt/myazure/vpn
 
 
 
-wget https://github.com/wangzhenjjcn/IPSEC_USER_MANAGEMENT/releases/download/v2.0.0.2/vpn-V2.0.0.2.jar  -O vpn-v2.0.0.2.jar
+wget https://github.com/wangzhenjjcn/IPSEC_USER_MANAGEMENT/releases/download/v2.0.0.2/V2.0.1.1  -O vpn-v2.0.0.2.jar
 nohup java  -jar /mnt/myazure/vpn/vpn-v2.0.0.2.jar > /var/log/vpn/wvpn.log &
 
 
