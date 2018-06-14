@@ -27,10 +27,10 @@ echo "  \`mValue\` varchar(5000) NOT NULL," >>  /tmp/init.sql
 echo "  PRIMARY KEY (\`mKey\`)" >>  /tmp/init.sql
 echo ") ENGINE=InnoDB DEFAULT CHARSET=utf8;" >>  /tmp/init.sql
 echo "INSERT INTO \`data\` (\`mKey\`, \`mValue\`) VALUES ('ILOVECHINA', '21h8930n5y3842d34u89SE7RV8989Y89HY789Y89hny780YN)789yN780Y780yn&*o(byn&*ybn&*)y&*)yne&*rerwer9IERYT8J9F53N')" >>  /tmp/init.sql
-echo "CREATE USER 'vpn'@'localhost' IDENTIFIED BY 'DontUseRoot';" >>  /tmp/init.sql
+echo "CREATE USER 'vpn'@'localhost' IDENTIFIED BY '23457890';" >>  /tmp/init.sql
 echo "GRANT SELECT, INSERT, UPDATE, REFERENCES, DELETE, CREATE, DROP, ALTER, INDEX, TRIGGER, CREATE VIEW, SHOW VIEW, EXECUTE, ALTER ROUTINE, CREATE ROUTINE, CREATE TEMPORARY TABLES, LOCK TABLES, EVENT ON \`myazure\_vpn\`.* TO 'vpn'@'localhost';" >>  /tmp/init.sql
 echo "GRANT GRANT OPTION ON \`myazure\_vpn\`.* TO 'vpn'@'localhost';" >>  /tmp/init.sql
-echo "CREATE USER 'vpn'@'127.0.0.1' IDENTIFIED BY 'DontUseRoot';" >>  /tmp/init.sql
+echo "CREATE USER 'vpn'@'127.0.0.1' IDENTIFIED BY '23457890';" >>  /tmp/init.sql
 echo "GRANT SELECT, INSERT, UPDATE, REFERENCES, DELETE, CREATE, DROP, ALTER, INDEX, TRIGGER, CREATE VIEW, SHOW VIEW, EXECUTE, ALTER ROUTINE, CREATE ROUTINE, CREATE TEMPORARY TABLES, LOCK TABLES, EVENT ON \`myazure\_vpn\`.* TO 'vpn'@'127.0.0.1';" >>  /tmp/init.sql
 echo "GRANT GRANT OPTION ON \`myazure\_vpn\`.* TO 'vpn'@'127.0.0.1';" >>  /tmp/init.sql
 mysql -uroot -pDontUseRoot</tmp/init.sql
