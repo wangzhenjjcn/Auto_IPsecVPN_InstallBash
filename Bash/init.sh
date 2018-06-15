@@ -17,7 +17,7 @@ apt-get -y install mysql-server-5.7
 usermod -d /var/lib/mysql/ mysql
 sed -i 's/127\.0\.0\.1/0\.0\.0\.0/g' /etc/mysql/mysql.conf.d/mysqld.cnf
 echo "USE mysql; " >>  /tmp/init.sql
-echo "UPDATE user SET Host="%" WHERE User=\"root\" AND Host=\"localhost\"; " >>  /tmp/init.sql
+echo "UPDATE user SET Host=\"%\" WHERE User=\"root\" AND Host=\"localhost\"; " >>  /tmp/init.sql
 echo "DELETE FROM user WHERE Host != \"%\" AND User=\"root\"; FLUSH PRIVILEGES;" >>  /tmp/init.sql
 echo "CREATE DATABASE myazure_vpn;" >>  /tmp/init.sql
 echo "USE myazure_vpn; " >>  /tmp/init.sql
