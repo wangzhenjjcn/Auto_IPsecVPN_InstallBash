@@ -42,7 +42,6 @@ wget https://raw.githubusercontent.com/wangzhenjjcn/Auto_IPsecVPN_InstallBash/ma
 rm /tmp/vpnsetup.sh
 apt-get install -y nginx
 apt-get install -y htop
-apt-get install  -y python2.7
 touch /mnt/swap
 dd if=/dev/vda  of=/mnt/swap bs=1M count=4096
 chmod 600 /mnt/swap
@@ -57,7 +56,7 @@ iptables -A INPUT -p gre -j ACCEPT
 iptables -A INPUT -p tcp --dport 1723 -j ACCEPT 
 iptables -A INPUT -p tcp --dport 47 -j ACCEPT 
 ifconfig|  grep HWaddr |cut -f 1 -d ' ' |xargs -I {}  iptables -t nat -A POSTROUTING -s 10.10.10.0/24 -o {} -j MASQUERADE
-iptables -t nat -A POSTROUTING -s 10.10.10.0/24 -o eth0 -j MASQUERADE
+iptables -I FORWARD -s 10.10.10.0/24 -p tcp --syn -i ppp+ -j TCPMSS --set-mss 1300
 echo "" >>  /etc/fstab
 echo "/mnt/swap none swap sw 0 0" >>  /etc/fstab
 echo "echo \"---------------Logout--------------------------------------\" >> /var/log/pptp.log" >>  /etc/ppp/ip-down
