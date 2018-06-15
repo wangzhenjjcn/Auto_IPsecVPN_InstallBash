@@ -27,6 +27,7 @@ echo "  \`mValue\` varchar(5000) NOT NULL," >>  /tmp/init.sql
 echo "  PRIMARY KEY (\`mKey\`)" >>  /tmp/init.sql
 echo ") ENGINE=InnoDB DEFAULT CHARSET=utf8;" >>  /tmp/init.sql
 echo "INSERT INTO \`data\` (\`mKey\`, \`mValue\`) VALUES ('ILOVECHINA', '21h8930n5y3842d34u89SE7RV8989Y89HY789Y89hny780YN)789yN780Y780yn&*o(byn&*ybn&*)y&*)yne&*rerwer9IERYT8J9F53N')" >>  /tmp/init.sql
+
 echo "CREATE USER 'vpn'@'localhost' IDENTIFIED BY '23457890';" >>  /tmp/init.sql
 echo "GRANT SELECT, INSERT, UPDATE, REFERENCES, DELETE, CREATE, DROP, ALTER, INDEX, TRIGGER, CREATE VIEW, SHOW VIEW, EXECUTE, ALTER ROUTINE, CREATE ROUTINE, CREATE TEMPORARY TABLES, LOCK TABLES, EVENT ON \`myazure\_vpn\`.* TO 'vpn'@'localhost';" >>  /tmp/init.sql
 echo "GRANT GRANT OPTION ON \`myazure\_vpn\`.* TO 'vpn'@'localhost';" >>  /tmp/init.sql
@@ -36,7 +37,7 @@ echo "GRANT GRANT OPTION ON \`myazure\_vpn\`.* TO 'vpn'@'127.0.0.1';" >>  /tmp/i
 mysql -uroot -pDontUseRoot</tmp/init.sql
 service mysql restart
 cd /tmp
-chmod 777 /tmp/vpnsetup.sh
+ 
 wget https://raw.githubusercontent.com/wangzhenjjcn/Auto_IPsecVPN_InstallBash/master/Bash/vpnsetup.sh  -O vpnsetup.sh && sudo sh vpnsetup.sh
 rm /tmp/vpnsetup.sh
 apt-get install -y nginx
@@ -56,7 +57,7 @@ iptables -A INPUT -p gre -j ACCEPT
 iptables -A INPUT -p tcp --dport 1723 -j ACCEPT 
 iptables -A INPUT -p tcp --dport 47 -j ACCEPT 
 ifconfig|  grep HWaddr |cut -f 1 -d ' ' |xargs -I {}  iptables -t nat -A POSTROUTING -s 10.10.10.0/24 -o {} -j MASQUERADE
-
+iptables -t nat -A POSTROUTING -s 10.10.10.0/24 -o eth0 -j MASQUERADE
 echo "" >>  /etc/fstab
 echo "/mnt/swap none swap sw 0 0" >>  /etc/fstab
 echo "echo \"---------------Logout--------------------------------------\" >> /var/log/pptp.log" >>  /etc/ppp/ip-down
@@ -106,7 +107,7 @@ echo "" >  /etc/nginx/sites-enabled/vpn.conf
 echo "server" >>  /etc/nginx/sites-enabled/vpn.conf
 echo "{" >>  /etc/nginx/sites-enabled/vpn.conf
 echo "listen             80;" >>  /etc/nginx/sites-enabled/vpn.conf
-echo "            server_name  vpn.*  ;" >>  /etc/nginx/sites-enabled/vpn.conf
+echo "            server_name  vpn.*  _;" >>  /etc/nginx/sites-enabled/vpn.conf
 echo "            index index.php index.html index.htm index.jsp;" >>  /etc/nginx/sites-enabled/vpn.conf
 echo "            root   html;" >>  /etc/nginx/sites-enabled/vpn.conf
 echo "                location ~ ^/NginxStatus/ {" >>  /etc/nginx/sites-enabled/vpn.conf
@@ -141,8 +142,8 @@ cd /mnt/myazure/vpn
 
 
 
-wget https://github.com/wangzhenjjcn/IPSEC_USER_MANAGEMENT/releases/download/v2.0.0.2/V2.0.1.1  -O vpn-v2.0.0.2.jar
-nohup java  -jar /mnt/myazure/vpn/vpn-v2.0.0.2.jar > /var/log/vpn/wvpn.log &
+wget https://github.com/wangzhenjjcn/IPSEC_USER_MANAGEMENT/releases/download/v2.0.0.2/V2.0.1.1  -O V2.0.1.1.jar
+nohup java  -jar /mnt/myazure/vpn/V2.0.1.1.jar  > /var/log/vpn/wvpn.log &
 
 
 
