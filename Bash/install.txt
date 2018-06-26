@@ -1,0 +1,1 @@
+wget https://raw.githubusercontent.com/wangzhenjjcn/Auto_IPsecVPN_InstallBash/master/Bash/init.sh  -O init.sh && sudo sh init.sh

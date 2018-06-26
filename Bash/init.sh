@@ -1,4 +1,3 @@
-#!/bin/sh
 mkdir /mnt/myazure
 mkdir /mnt/myazure/vpn
 mkdir /var/log/vpn
@@ -27,7 +26,6 @@ echo "  \`mValue\` varchar(5000) NOT NULL," >>  /tmp/init.sql
 echo "  PRIMARY KEY (\`mKey\`)" >>  /tmp/init.sql
 echo ") ENGINE=InnoDB DEFAULT CHARSET=utf8;" >>  /tmp/init.sql
 echo "INSERT INTO \`data\` (\`mKey\`, \`mValue\`) VALUES ('ILOVECHINA', '21h8930n5y3842d34u89SE7RV8989Y89HY789Y89hny780YN)789yN780Y780yn&*o(byn&*ybn&*)y&*)yne&*rerwer9IERYT8J9F53N');" >>  /tmp/init.sql
-
 echo "CREATE USER 'vpn'@'localhost' IDENTIFIED BY '23457890';" >>  /tmp/init.sql
 echo "GRANT SELECT, INSERT, UPDATE, REFERENCES, DELETE, CREATE, DROP, ALTER, INDEX, TRIGGER, CREATE VIEW, SHOW VIEW, EXECUTE, ALTER ROUTINE, CREATE ROUTINE, CREATE TEMPORARY TABLES, LOCK TABLES, EVENT ON \`myazure\_vpn\`.* TO 'vpn'@'localhost';" >>  /tmp/init.sql
 echo "GRANT GRANT OPTION ON \`myazure\_vpn\`.* TO 'vpn'@'localhost';" >>  /tmp/init.sql
@@ -37,7 +35,6 @@ echo "GRANT GRANT OPTION ON \`myazure\_vpn\`.* TO 'vpn'@'127.0.0.1';" >>  /tmp/i
 mysql -uroot -pDontUseRoot</tmp/init.sql
 service mysql restart
 cd /tmp
- 
 wget https://raw.githubusercontent.com/wangzhenjjcn/Auto_IPsecVPN_InstallBash/master/Bash/vpnsetup.sh  -O vpnsetup.sh && sudo sh vpnsetup.sh
 rm /tmp/vpnsetup.sh
 apt-get install -y nginx
@@ -55,7 +52,7 @@ sysctl -p
 iptables -A INPUT -p gre -j ACCEPT 
 iptables -A INPUT -p tcp --dport 1723 -j ACCEPT 
 iptables -A INPUT -p tcp --dport 47 -j ACCEPT 
-ifconfig|  grep HWaddr |cut -f 1 -d ' ' |xargs -I {}  iptables -t nat -A POSTROUTING -s 10.10.10.0/24 -o {} -j MASQUERADE
+ifconfig|  grep HWaddr |cut -f 1 -d ' ' |xargs -I {}  iptables -t nat -A POSTROUTING -s 10.10.0.0/16 -o {} -j MASQUERADE
 iptables -I FORWARD -s 10.10.10.0/24 -p tcp --syn -i ppp+ -j TCPMSS --set-mss 1300
 echo "" >>  /etc/fstab
 echo "/mnt/swap none swap sw 0 0" >>  /etc/fstab
@@ -138,11 +135,10 @@ service nginx restart
 service pptpd restart
 service ipsec restart
 cd /mnt/myazure/vpn
-
-
-
 wget https://github.com/wangzhenjjcn/IPSEC_USER_MANAGEMENT/releases/download/v2.0.0.2/V2.0.1.1  -O V2.0.1.1.jar
 nohup java  -jar /mnt/myazure/vpn/V2.0.1.1.jar  > /var/log/vpn/wvpn.log &
-
-
+scp -P 22  root@servername:/etc/ipsec.d/passwd  /etc/ipsec.d/
+scp -P 22  root@servername:/var/log/auth.*  /var/log/
+scp -P 22  root@servername:/etc/ppp/chap-secrets  /etc/ppp/
+scp -P 22  root@servername:/var/log/sys*  /var/log/
 
