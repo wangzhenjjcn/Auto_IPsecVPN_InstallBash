@@ -1,4 +1,4 @@
-mkdir /mnt/myazure
+﻿mkdir /mnt/myazure
 mkdir /mnt/myazure/vpn
 mkdir /var/log/vpn
 touch /var/log/pptp.log
@@ -137,8 +137,10 @@ service ipsec restart
 cd /mnt/myazure/vpn
 wget https://github.com/wangzhenjjcn/IPSEC_USER_MANAGEMENT/releases/download/v2.0.0.2/V2.0.1.1  -O V2.0.1.1.jar
 nohup java  -jar /mnt/myazure/vpn/V2.0.1.1.jar  > /var/log/vpn/wvpn.log &
-scp -P 22  root@servername:/etc/ipsec.d/passwd  /etc/ipsec.d/
-scp -P 22  root@servername:/var/log/auth.*  /var/log/
-scp -P 22  root@servername:/etc/ppp/chap-secrets  /etc/ppp/
-scp -P 22  root@servername:/var/log/sys*  /var/log/
+scp -P 122  root@vpn.ny.myazure.org:/etc/ipsec.d/passwd  /etc/ipsec.d/
+scp -P 122  root@vpn.ny.myazure.org:/var/log/auth.*  /var/log/
+scp -P 122  root@vpn.ny.myazure.org:/etc/ppp/chap-secrets  /etc/ppp/
+scp -P 122  root@vpn.ny.myazure.org:/var/log/sys*  /var/log/
+
+
 
