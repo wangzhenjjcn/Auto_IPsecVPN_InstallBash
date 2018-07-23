@@ -4,6 +4,8 @@ mkdir /var/log/vpn
 touch /var/log/pptp.log
 touch /var/log/auth.pptp.log
 touch /tmp/init.sql
+echo "nameserver 8.8.8.8" >>   /etc/resolvconf/resolv.conf.d/base
+echo "nameserver 8.8.4.4" >>   /etc/resolvconf/resolv.conf.d/base
 apt-get update -y
 apt-get install -y software-properties-common python-software-properties debconf-utils
 add-apt-repository -y ppa:webupd8team/java
